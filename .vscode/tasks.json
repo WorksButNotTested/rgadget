@@ -1,0 +1,234 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build",
+            "type": "shell",
+            "command": "cargo build --offline",
+            "group": "build",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "presentation": {
+                "clear": true,
+                "reveal": "always",
+                "focus": true,
+            }
+        },
+        {
+            "label": "Build - Release",
+            "type": "shell",
+            "command": "cargo build --offline --release",
+            "group": "build",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "presentation": {
+                "clear": true,
+                "reveal": "always",
+                "focus": true,
+            }
+        },
+        {
+            "label": "Build - Profiling",
+            "type": "shell",
+            "command": "cargo build --offline --profile profiling",
+            "group": "build",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "presentation": {
+                "clear": true,
+                "reveal": "always",
+                "focus": true,
+            }
+        },
+        {
+            "label": "Run PPC - Debug",
+            "type": "shell",
+            "command": "cargo run --offline -- -j -r -f ${workspaceFolder}/data/ppc.elf",
+            "group": "build",
+            "options": {
+                "cwd": "${workspaceFolder}",
+                "env": { "RUST_BACKTRACE": "1" }
+            },
+            "presentation": {
+                "clear": true,
+                "reveal": "always",
+                "focus": true,
+            }
+        },
+        {
+            "label": "Run PPC - Release",
+            "type": "shell",
+            "command": "cargo run --offline --release -- -j -r -f ${workspaceFolder}/data/ppc.elf",
+            "group": "build",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "presentation": {
+                "clear": true,
+                "reveal": "always",
+                "focus": true,
+            }
+        },
+        {
+            "label": "Run ARM - Debug",
+            "type": "shell",
+            "command": "cargo run --offline -- -j -r -f ${workspaceFolder}/data/arm.elf -- 'bx lr'",
+            "group": "build",
+            "options": {
+                "cwd": "${workspaceFolder}",
+                "env": { "RUST_BACKTRACE": "1" }
+            },
+            "presentation": {
+                "clear": true,
+                "reveal": "always",
+                "focus": true,
+            }
+        },
+        {
+            "label": "Run ARM - Release",
+            "type": "shell",
+            "command": "cargo run --offline --release -- -j -r -f ${workspaceFolder}/data/arm.elf",
+            "group": "build",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "presentation": {
+                "clear": true,
+                "reveal": "always",
+                "focus": true,
+            }
+        },
+        {
+            "label": "Run Aarch64 - Debug",
+            "type": "shell",
+            "command": "cargo run --offline -- -j -r -f ${workspaceFolder}/data/aarch64.elf -- 'bx lr'",
+            "group": "build",
+            "options": {
+                "cwd": "${workspaceFolder}",
+                "env": { "RUST_BACKTRACE": "1" }
+            },
+            "presentation": {
+                "clear": true,
+                "reveal": "always",
+                "focus": true,
+            }
+        },
+        {
+            "label": "Run Aarch64 - Release",
+            "type": "shell",
+            "command": "cargo run --offline --release -- -j -r -f ${workspaceFolder}/data/aarch64.elf",
+            "group": "build",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "presentation": {
+                "clear": true,
+                "reveal": "always",
+                "focus": true,
+            }
+        },
+        {
+            "label": "Run x64 - Debug",
+            "type": "shell",
+            "command": "cargo run --offline -- -j -r -f ${workspaceFolder}/data/x64.elf",
+            "group": "build",
+            "options": {
+                "cwd": "${workspaceFolder}",
+                "env": { "RUST_BACKTRACE": "1" }
+            },
+            "presentation": {
+                "clear": true,
+                "reveal": "always",
+                "focus": true,
+            }
+        },
+        {
+            "label": "Run x64 - Release",
+            "type": "shell",
+            "command": "cargo run --offline --release -- -j -r -f ${workspaceFolder}/data/x64.elf",
+            "group": "build",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "presentation": {
+                "clear": true,
+                "reveal": "always",
+                "focus": true,
+            }
+        },
+        {
+            "label": "Pretty",
+            "type": "shell",
+            "command": "cargo fmt",
+            "group": "build",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "presentation": {
+                "clear": true,
+                "reveal": "always",
+                "focus": true,
+            }
+        },
+        {
+            "label": "Fix",
+            "type": "shell",
+            "command": "cargo fix --offline --allow-dirty",
+            "group": "build",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "presentation": {
+                "clear": true,
+                "reveal": "always",
+                "focus": true,
+            }
+        },
+        {
+            "label": "Profile",
+            "type": "shell",
+            "command": "samply record -n target/profiling/rgadget -j -r -c -f data/arm.elf -- 'add.?.? (r.), (\\1)'",
+            "group": "build",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "presentation": {
+                "clear": true,
+                "reveal": "always",
+                "focus": true,
+            },
+            "dependsOn": "Build - Profiling",
+        },
+        {
+            "label": "Build Image",
+            "type": "shell",
+            "command": "docker buildx build -f .devcontainer/Dockerfile -t rgadget --target rgadget ${workspaceFolder}",
+            "group": "build",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "presentation": {
+                "clear": true,
+                "reveal": "always",
+                "focus": true,
+            }
+        },
+        {
+            "label": "Export Image",
+            "type": "shell",
+            "command": "docker save -o ${workspaceFolder}/rgadget.tar rgadget",
+            "group": "build",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "presentation": {
+                "clear": true,
+                "reveal": "always",
+                "focus": true,
+            }
+        },
+    ]
+}

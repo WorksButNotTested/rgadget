@@ -1,0 +1,5 @@
+target/
+core*
+!vendor/**
+profile.json
+rgadget.tar
